@@ -17,6 +17,8 @@
 		- [1.8 Queue `std::queue`](#18-queue-stdqueue)
 		- [1.9 Priority Queue `std::priority_queue`](#19-priority-queue-stdpriority_queue)
 		- [1.10 Heap `std::priority_queue`](#110-heap-stdpriority_queue)
+		- [1.11 LinkedList](#111-linkedlist)
+		- [1.12 Pairs `std::pair`](#112-pairs-stdpair)
 	- [2.0 Trees](#20-trees)
 		- [2.1 Binary Tree](#21-binary-tree)
 		- [2.2 Balanced Trees](#22-balanced-trees)
@@ -33,7 +35,10 @@
 		- [4.3 Bubble Sort](#43-bubble-sort)
 		- [4.4 Merge Sort](#44-merge-sort)
 		- [4.5 Quicksort](#45-quicksort)
-
+		- [4.6 Sorting `std::sort`](#46-sorting-stdsort)
+	- [5.0 Strings](#50-strings)
+		- [5.1 STDIN Input](#51-stdin-input)
+		- [5.2 String Functions](#52-string-functions)	
 <!-- /TOC -->
 
 
@@ -466,7 +471,11 @@ q.pop();
 
 **Example Code**
 ```c++
-std::priority_queue<int> p;
+// MAX HEAP BY DEFAULT
+std::priority_queue<int> p; // greatest at top
+
+// CONVERT TO MIN-HEAP (OR MAKE VALUES NEGATIVE IN NORMAL MAX-HEAP)
+priority_queue<data_type, vector<data_type>, greater<data_type> > p; // Smallest at top
 
 //---------------------------------
 // General Operations
@@ -483,6 +492,11 @@ unsigned int size = p.size();
 
 // Remove
 p.pop();
+
+// Iterate through PQ
+while (!pqueue.empty()) {
+	pqueue.pop();
+}
 ```
 -------------------------------------------------------
 ### 1.10 Heap `std::priority_queue`
@@ -496,6 +510,76 @@ p.pop();
 **Max Heap Example (using a binary tree)**
 
 ![MaxHeap](General/MaxHeap.png)
+
+-------------------------------------------------------
+### 1.11 LinkedList
+**Use for**
+* Constant-time insertions/deletions from the list
+* You don't need random access to any elements
+* Want to be able to insert items in the middle of the list
+
+**Do not use for**
+* Accessing items in middle of list (need hashmap & doubly linkedlist to do this efficiently)
+
+**Time Complexity**
+
+| Operation    | Time Complexity |
+|--------------|-----------------|
+| Insert       |     `O(1)`      |
+| Remove       |     `O(1)` 	 |
+| Find         |     `O(n)` 	 |
+
+**Example Code**
+```c++
+
+/**
+ * Definition for singly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode() : val(0), next(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr) {}
+ *     ListNode(int x, ListNode *next) : val(x), next(next) {}
+ * };
+ */
+
+/**
+ * Definition for doubly-linked list.
+ * struct ListNode {
+ *     int val;
+ *     ListNode *next;
+ *     ListNode *prev;
+ *     ListNode() : val(0), next(nullptr), prev(nullptr) {}
+ *     ListNode(int x) : val(x), next(nullptr), prev(nullptr) {}
+ *     ListNode(int x, ListNode *next, ListNode* prev) : val(x), next(next), prev(prev) {}
+ * };
+ */
+```
+-------------------------------------------------------
+### 1.12 Pairs `std::pair`
+
+**Example Code**
+```c++
+
+// Initialise
+pair<data_type_1, data_type_2> variable;
+// OR
+pair<data_type_1, data_type_2> variable = make_pair(value1,value2);
+// OR (ONLY IN C++11)
+pair<int, int> p = {1, 2};
+
+// Store values
+variable.first = value;
+variable second = value;
+// Retrieve values
+cout << variable.first << " " << variable.second << endl;
+
+//Nesting pairs
+pair<int, pair<int, int> > a;
+a.first = 5;
+a.second.first = 6;
+a.second.second = 7;
+```
 -------------------------------------------------------
 ## 2.0 Trees
 ### 2.1 Binary Tree
@@ -738,3 +822,165 @@ p.pop();
 #### Visualization
 
 ![QuickSort](Sorting/Animations/Quicksort.gif)
+
+-------------------------------------------------------
+### 4.6 Sorting `std::sort`
+
+**Function Definition**
+`void sort (RandomAccessIterator first, RandomAccessIterator last, Compare comp);`
+
+**Example Code**
+```c++
+//---------------------------------
+// Sort an Array
+//---------------------------------
+int v[2000];
+
+// SORT ARRAY IN ASCENDING ORDER
+std::sort(std::begin(v), std::end(v));
+
+// SORT ARRAY IN DESCENDING ORDER
+std::sort(std::begin(v), std::end(v), greater<int>());
+
+// IF NOT C++11, CAN'T USE BEGIN,END FOR ARR
+int n = sizeof(arr) / sizeof(arr[0]);
+sort(arr, arr + n, greater<int>());
+sort(arr, arr + n);
+
+//---------------------------------
+// Sort a Vector
+//---------------------------------
+vector<int> v{ 1, 5, 8, 9, 6, 7, 3, 4, 2, 0 };
+sort(v.begin(), v.end());
+sort(v.begin(), v.end(), greater<int>());
+
+//---------------------------------
+// Sort A String
+//---------------------------------
+string s = "geeksforgeeks"
+std::sort(str.begin(), str.end());
+
+//---------------------------------
+// Sort with Custom Comparator
+//---------------------------------
+struct Interval {
+    int start, end;
+};
+  
+// Compares two intervals according to starting times.
+bool compareInterval(Interval i1, Interval i2)
+{
+    return (i1.start < i2.start);
+}
+
+vector<Interval> v { { 6, 8 }, { 1, 9 }, { 2, 4 }, { 4, 7 } };
+
+// sort the intervals in increasing order of start time
+sort(v.begin(), v.end(), compareInterval);
+
+//---------------------------------
+// Sort with Custom Lambda Functions
+//---------------------------------
+vector<int> arr = { 1,2,3,4,5,6,7,8,9 };
+sort(begin(arr), end(arr), [](int a, int b) { return a > b; });
+
+// We can sort data using an inline lambda expression
+std::sort(std::begin(vector), std::end(vector),
+[](const Base &a, const Base &b) { return a.variable < b.variable;});
+
+// We can also pass a lambda object as the comparator
+// and reuse the lambda multiple times
+auto compare = [](const Base &a, const Base &b) {
+	     return a.variable < b.variable;};
+std::sort(std::begin(deque), std::end(deque), compare);
+```
+-------------------------------------------------------
+## 5.0 Strings
+### 5.1 STDIN Input
+**Example Code**
+```c++
+// Read Line
+std::string line;
+std::getline(std::cin, line);
+std::cout << line << std::endl;
+
+// Read Lines Until Empty Line
+std::string line;
+while (std::getline(std::cin, line) && !line.empty()) {
+	std::cout << line << std::endl;
+}
+```
+
+### 5.2 String Functions
+#### Length
+```c++
+s.length();
+```
+
+#### Operator []
+```c++
+std::string s("Exemplar ");
+s[s.size()-1] = 'y'; // equivalent to s.back() = 'y';
+```
+
+#### Clear
+```c++
+s.clear();
+```
+
+#### Insert
+```c++
+1) Removes std::min(count, size() - index) characters starting at index.
+2) Removes the character at position.
+3) Removes the characters in the range [first, last).
+s.erase(std::find(s.begin(), s.end(), ' ')); // erases first ' '
+```
+
+#### Push Back & Pop Back (ONLY ONE CHARACTER)
+```c++
+str.push_back('!');
+str.pop_back();
+```
+
+#### Append
+```c++
+// 1) Append a char 3 times.
+output.append(3, '*');
+
+// 2) Append a whole string
+output.append(str); 
+```
+
+#### Compare
+```c++
+// 1) Compare with other string
+compare_result = batman.compare(superman);
+std::cout << "1) " <<
+(
+	compare_result < 0 ? "Batman comes before Superman.\n" :
+	compare_result > 0 ? "Superman comes before Batman.\n" :
+	"Superman and Batman are the same.\n"
+);
+```
+
+#### Substr - String containing the substring [pos, pos+count) or [pos, size()).
+```c++
+// count is npos, returns [pos, size())
+std::string sub1 = a.substr(10);
+
+// both pos and pos+count are within bounds, returns [pos, pos+count)
+std::string sub2 = a.substr(5, 3);
+```
+
+#### Find
+```c++
+// search from beginning of string
+n = s.find("is");
+
+// search from position 5
+n = s.find("is", 5);
+
+// check if found or not
+if (s.find("!") == std::string::npos) {
+	std::cout << "not found\n";
+```
