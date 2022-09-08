@@ -84,6 +84,11 @@
 ```c++
 std::vector<int> v;
 
+// Create a vector of size n with all values as 10.
+vector<int> vect(n, 10);
+
+vector<int> vect{ 10, 20, 30 };
+
 //---------------------------------
 // General Operations
 //---------------------------------
@@ -309,6 +314,7 @@ std::map<std::string, std::string> m;
 
 // Insert
 m.insert(std::pair<std::string, std::string>("key", "value"));
+m["key"] = "value";
 
 // Access by key
 std::string value = m.at("key");
@@ -319,6 +325,11 @@ unsigned int size = m.size();
 // Iterate
 for(std::map<std::string, std::string>::iterator it = m.begin(); it != m.end(); it++) {
     std::cout << *it << std::endl;
+}
+
+// C++11 iteration
+for ( const auto &myPair : myMap ) {
+    std::cout << myPair.first << "\n";
 }
 
 // Remove by key
