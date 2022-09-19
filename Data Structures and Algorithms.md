@@ -89,6 +89,9 @@ vector<int> vect(n, 10);
 
 vector<int> vect{ 10, 20, 30 };
 
+// Creates 2-D Vector (n x m) with initial value 0
+vector<vector<int>> vis(n, vector<int>(m, 0));
+
 //---------------------------------
 // General Operations
 //---------------------------------
@@ -488,6 +491,9 @@ std::priority_queue<int> p; // greatest at top
 // CONVERT TO MIN-HEAP (OR MAKE VALUES NEGATIVE IN NORMAL MAX-HEAP)
 priority_queue<data_type, vector<data_type>, greater<data_type> > p; // Smallest at top
 
+// Fill in priority queue with all values in vector
+priority_queue<int> q2(vec.begin(), vec.end());
+ 	
 //---------------------------------
 // General Operations
 //---------------------------------
@@ -960,6 +966,9 @@ output.append(3, '*');
 
 // 2) Append a whole string
 output.append(str); 
+
+// Append a int, long, etc. to current string
+ans += to_string(node->val);
 ```
 
 #### Compare
