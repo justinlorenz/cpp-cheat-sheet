@@ -1004,3 +1004,15 @@ n = s.find("is", 5);
 if (s.find("!") == std::string::npos) {
 	std::cout << "not found\n";
 ```
+### Split
+```c++
+vector<string> split(string s, char c) {
+	vector<string> parts;
+	string part;
+	istringstream in(s);
+	while (getline(in, part, c)) {
+	    parts.push_back(part);
+	}
+	return parts;
+}
+```
