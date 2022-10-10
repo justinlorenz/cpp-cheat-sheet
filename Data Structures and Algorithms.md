@@ -1015,4 +1015,19 @@ vector<string> split(string s, char c) {
 	}
 	return parts;
 }
+
+void split(vector<string>& tweets) {
+    for (auto& t: tweets) {
+        unordered_set<string> currSeen;
+        istringstream s(t);
+        string currTweet;
+        while(getline(s, currTweet, ' ')) {
+            istringstream i(currTweet);
+            string word;
+            while (getline(i, word, ',')) {
+                cout << word << endl;
+            }
+        }
+    }
+}
 ```
