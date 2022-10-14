@@ -76,3 +76,47 @@ int main() {
     return 0;
 }
 ```
+### CSV List
+```c++
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+
+using namespace std;
+
+struct Stock {
+    string name;
+    int buy, sell;
+};
+
+int main() {
+    ifstream f("data.csv");
+    string line;
+    vector<Stock> stocks;
+    
+    while(getline(f,line)) {
+        stringstream ss(line);
+        string name;
+        string buy, sell;
+        getline(ss, name, ',');
+        getline(ss, buy, ',');
+        getline(ss, sell, ',');
+        Stock s = {name, stoi(buy), stoi(sell)};
+        stocks.push_back(s);
+    }
+
+    sort(stocks.begin(), stocks.end(), [](Stock& a, Stock& b) {
+        int differenceA = a.sell - a.buy;
+        int differenceB = b.sell - b.buy;
+        return (differenceA == differenceB) ? (a.name < b.name) : differenceA > differenceB;
+    });
+
+    for (const auto& s: stocks) {
+        cout << s.name << " (" << s.buy << "," << s.sell << ")" << endl;
+    }
+
+    return 0;
+}
+```
