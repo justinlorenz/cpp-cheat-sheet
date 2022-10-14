@@ -120,3 +120,54 @@ int main() {
     return 0;
 }
 ```
+
+### Priority Queue Custom Sorting
+```c++
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <vector>
+#include <algorithm>
+#include <queue>
+
+using namespace std;
+
+struct Stock {
+    string name;
+    int buy, sell;
+};
+
+class Compare {
+public:
+    bool operator() (Stock& a, Stock& b) {
+        int differenceA = a.sell - a.buy;
+        int differenceB = b.sell - b.buy;
+        return (differenceA == differenceB) ? (a.name < b.name) : differenceA > differenceB;
+    }
+};
+
+int main() {
+    // PQ using Compare class with overloaded operator()
+    priority_queue<Stock, vector<Stock>, Compare> pq1; 
+
+    auto comp = [](Stock a, Stock b) {
+        int differenceA = a.sell - a.buy;
+        int differenceB = b.sell - b.buy;
+        return (differenceA == differenceB) ? (a.name < b.name) : differenceA > differenceB;
+    };
+
+    // PQ using custom lambda function
+    priority_queue<Stock, vector<Stock>, decltype(comp)> pq2(comp);
+
+    pq2.push({"paypal", 10, 15});
+    pq2.push({"apple", 15, 20});
+    pq2.push({"google", 40, 100});
+
+    while (!pq2.empty()) {
+        const Stock& s = pq2.top();
+        cout << s.name << " (" << s.buy << "," << s.sell << ")" << endl;
+        pq2.pop();
+    }
+    return 0;
+}
+```
