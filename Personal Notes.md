@@ -41,4 +41,8 @@ Vector(Vector&& v) { // Move Constructor (called by foo(createVector())
 - **std::forward:** According to the T template parameter, std::forward identifies whether an lvalue or an rvalue reference has been passed to it and returns a corresponding kind of reference.
 
 ## Inheritance + Virtual
-- Ambiguity can arise when you have one derived class inheriting from two base classes that have the same function, and the derived class itself doesn't override that function. Need to specify the parent class to class function from (derived.BaseClass1::function1()).
+- Ambiguity can arise when you have one derived class inheriting from two base classes that have the same function, and the derived class itself doesn't override that function. Need to specify the parent class to class function from (derived.BaseClass1::function1()). Ambiguity can also occur with variables. 
+- Ambiguity can arise in diamond problem where most Base class has a variable, and the variable is found in multiple inherited parents. Solve this using the virtual keyword during the inherit portion for both base classes (class BaseClass1 : virtual public CommonBaseClass). 
+- Call super constructor in member initialization (BaseClass() : CommonBaseClass(100) {});
+- Use virtual functions to achieve dynamic polymorphism which gives the ability to call derived class function using a base class pointer or reference.
+- Virtual keyword for destructor is necessary when you want different destructors to follow proper order while objects is being deleted through base class pointer.
