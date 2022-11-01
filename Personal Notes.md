@@ -50,3 +50,15 @@ Vector(Vector&& v) { // Move Constructor (called by foo(createVector())
 - You might be thinking: vtables are cool and all, but how exactly do they solve the problem? When the compiler sees b->bar() in the example above, it will lookup B’s vtable for bar’s entry and follow the corresponding function pointer, right? We would still be calling B::bar() and not C::bar()… Very true, I still need to tell the second part of the story: vpointers. Every time the compiler creates a vtable for a class, it adds an extra argument to it: a pointer to the corresponding virtual table, called the vpointer. Note that the vpointer is just another class member added by the compiler and increases the size of every object that has a vtable by sizeof(vpointer). Hopefully you have grasped how dynamic function dispatch can be implemented by using vtables: when a call to a virtual function on an object is performed, the vpointer of the object is used to find the corresponding vtable of the class. Next, the function name is used as index to the vtable to find the correct (most specific) routine to be executed. Done!
 - By now it should also be clear why it is always a good idea to make destructors of base classes virtual. Since derived classes are often handled via base class references, declaring a non-virtual destructor will be dispatched statically, obfuscating the destructor of the derived class (it is never called).
 
+## RAII 
+- "RAII" stands for "Resource Acquisition is Initialization" and is actually quite a misnomer, since it isn't resource acquisition (and the initialization of an object) it is concerned with, but releasing the resource (by means of destruction of an object).
+- At its very heart, the idiom features encapsulating resources (chunks of memory, open files, unlocked mutexes, you-name-it) in local, automatic objects, and having the destructor of that object releasing the resource when the object is destroyed at the end of the scope it belongs to:
+- 
+
+## Vector Allocation
+- Stack allocated vector will allocate the vector, i.e. the header info, on the stack, but the elements on the free store ("heap"). Created a vector on the heap will allocate everything on the free store.
+
+  
+
+
+
