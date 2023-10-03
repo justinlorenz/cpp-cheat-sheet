@@ -4,6 +4,69 @@
 - Prim's / Kruskal's
 - Topological Sort
 - Union Find
+
+https://leetcode.com/problems/find-if-path-exists-in-graph/description/
+```c++
+class DisjointSetUnion {
+public:
+    DisjointSetUnion(int n) :
+    n(n),
+    parent(std::vector<int>(n)),
+    rank(std::vector<int>(n))
+    {
+        std::fill(rank.begin(), rank.end(), 1);
+        for (int i = 0; i < n; i++) {
+            parent[i] = i;
+        }
+    }
+
+    int find(int node) {
+        if (node != parent[node]) {
+            parent[node] = find(parent[node]);
+        }
+        return parent[node];
+    }
+    
+    void Union(int x, int y) {
+        int xRoot = find(x);
+        int yRoot = find(y);
+        if (xRoot == yRoot) return;
+
+        if (rank[xRoot] > rank[xRoot]) {
+            parent[yRoot] = xRoot;
+            rank[xRoot] += rank[yRoot];
+        } else {
+            parent[xRoot] = yRoot;
+            rank[yRoot] += rank[xRoot];
+        }
+    }
+
+    void printTree() {
+        for (int i = 0; i < n; i++) {
+            // Cause final path compression
+            find(i);
+            cout << "Parent " << i << ": " << parent[i] << '\n';
+        }
+    }
+
+private:
+    std::vector<int> parent, rank;
+    int n;
+};
+
+class Solution {
+public:
+    bool validPath(int n, vector<vector<int>>& edges, int source, int destination) {
+        bool foundPath = false;
+        DisjointSetUnion disjointUnion(n);
+        for (vector<int>& e : edges) {
+            disjointUnion.Union(e[0], e[1]);
+        }
+        disjointUnion.printTree();
+        return (disjointUnion.find(source) == disjointUnion.find(destination));
+    }
+};
+```
 - Monotonic Stack
 - Prefix / Suffix sums
 
