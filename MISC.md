@@ -1,3 +1,13 @@
+### Required ALGO Topics
+- DFS / BFS
+- Dijkstra's
+- Prim's / Kruskal's
+- Topological Sort
+- Union Find
+- Monotonic Stack
+- Prefix / Suffix sums
+
+
 ### Find Ids from Tweet Coding Question
 ```c++
 #include <iostream>
